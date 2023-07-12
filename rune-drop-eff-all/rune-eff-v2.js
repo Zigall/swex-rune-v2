@@ -3,15 +3,16 @@ const pluginName = 'RuneDropEfficiency2';
 module.exports = {
   defaultConfig: {
     enabled: true,
+  showAllUpgrades: false,
 	flatStatsHalf: false,
 	showGemEfficiencies: false,
 	showLegendGemEfficiencies: false
   },
 	defaultConfigDetails: {
+  showAllUpgrades: {label: 'Show all upgrades?'},
 	flatStatsHalf: {label: 'Flat stats count 50%?'},
 	showGemEfficiencies: {label: 'Show hero table?'},
 	showLegendGemEfficiencies: {label: 'Show legend gem table?'}
-	
   },
   pluginName,
   pluginDescription: 'Logs the maximum possible efficiency for runes as they drop and all upgrades',
@@ -66,11 +67,15 @@ module.exports = {
         }
         break;
       case 'upgradeRune_v2': {
-			  const newLevel = resp.rune.upgrade_curr;
+        if (config.Config.Plugins[this.pluginName].showAllUpgrades) {
+          runesInfo.push(this.logRuneDrop(resp.rune,config));
+        } else {
+			    const newLevel = resp.rune.upgrade_curr;
 
-			  if (newLevel % 3 === 0 && newLevel <= 12) {
-			    runesInfo.push(this.logRuneDrop(resp.rune,config));
-			  }
+			    if (newLevel % 3 === 0 && newLevel <= 12) {
+			      runesInfo.push(this.logRuneDrop(resp.rune,config));
+			    }
+        }
         break;
       }
       case 'AmplifyRune':
@@ -166,7 +171,7 @@ module.exports = {
     let starHtml = this.mountStarsHtml(rune);
 	let effectsHtml = this.mountRuneStats(rune);
 	let gemHtml = this.mountGemValuesTable(rune,config);
-//<img src="../assets/runes/${this.rune.sets[rune.set_id]}.png" />
+  let runeClass = gMapping.isAncient(rune) ? rune.class - 10 : rune.class;
     return `<div class="rune item" height="105px">
               <div class="ui image ${color} label">
               <img src="../assets/runes/${gMapping.rune.sets[rune.set_id]}.png" />
@@ -309,6 +314,7 @@ module.exports = {
       html = html.concat('<span class="star"><img src="../assets/icons/star-unawakened.png" /></span>');
       count += 1;
     }
+    html = html.concat(runeClass);
 
     return html.concat('</div>');
   },
