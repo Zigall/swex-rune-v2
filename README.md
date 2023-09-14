@@ -20,3 +20,7 @@ Top 3 (and ties) for gemmed efficiency are highlighted. Note: ungrindable stats 
 ![image](https://user-images.githubusercontent.com/21117386/125679848-0bd4fabb-bf4c-4df6-aa0e-b28afc166c61.png)
 
 ![image](https://user-images.githubusercontent.com/21117386/125680030-36e2240a-96c3-426a-8569-e9063c3dbeb7.png)
+
+
+EDIT: as of 14/09/20023:
+https://www.reddit.com/r/summonerswar/comments/16idmio/state_of_swex_after_patch_809/
